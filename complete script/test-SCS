@@ -1,0 +1,125 @@
+;---------Test script for SCS--------------------------------------
+;------------------------------------------------------------------
+
+
+;---------Specify the simulation directory-------------------------
+;------------------------------------------------------------------
+; vecFile is the input file
+
+simulator( 'spectre )
+design(	 "/tmp/r0288315/simulation/system2/spectre/schematic/netlist/netlist")
+
+resultsDir( "/tmp/r0288315/simulation/system2/spectre/schematic" )
+modelFile( 
+    '("/users/start2012/r0288315/master/FreePDK45/ncsu_basekit/models/hspice/hspice_nom.include" "")
+)
+vecFile(
+    "/users/start2012/r0288315/master/FreePDK45/ncsu_basekit/cdssetup/script/in.vec"
+)
+hlcheck( "off" )
+
+;---------Specify the circuit parameter----------------------------
+;------------------------------------------------------------------
+
+analysis('tran ?stop "30n"  )
+desVar(	  "nw_inv6" 500n	)
+desVar(	  "mx_nw" 500n	)
+desVar(	  "mx_nw2" 400n	)
+desVar(	  "nw_inv" 500n	)
+desVar(	  "nw_inv2" 600n	)
+desVar(	  "t" 200p	)        ; clock period
+desVar(	  "delay" 10p	)
+desVar(	  "a_nw" 1000n	)
+desVar(	  "nw_tg" 600n	)
+desVar(	  "nw_tg2" 290n	)
+desVar(	  "wn3" 500n	)
+desVar(	  "pw_inv6" "1.7*nw_inv6"	)
+desVar(	  "pw_inv2" "1.7*nw_inv"	)
+desVar(	  "pw_inv" "1.7*nw_inv"	)
+desVar(	  "wp3" "1.7*wn3"	)
+desVar(	  "pw_tg" "1.7*nw_tg"	)
+desVar(	  "pw_tg2" "1.7*nw_tg2"	)
+
+
+
+;---------Specify the simulation option----------------------------
+;------------------------------------------------------------------
+
+envOption(
+	'userCmdLineOption  "-64" 
+	'analysisOrder  list("tran") 
+)
+option(	'nthreads  "25" 
+	'multithread  "on" 
+)
+option( ?categ 'turboOpts
+	'uniMode  "APS" 
+)
+
+saveOption( 'save "selected" )
+;save( 'v "/I<8:0>" "/Q<8:0>" "/A<8:0>" "/theta<8:0>" "/amp<8:0>" "/theta2<8:0>" "/phi<8:0>" "/angle1<8:0>" "/angle2<8:0>" "/S1i<8:0>" "/S1q<8:0>" "/S2i<8:0>" "/S2q<8:0>" )
+save( 'i "/V0/PLUS" )
+
+temp( 27 ) 
+run()
+
+;---------output result to file -----------------------------------
+;------------------------------------------------------------------
+
+power = (abs((integ(IT("/V0/PLUS") 15e-9 30e-09) * 0.9)) / 15e-09) 
+; bypass the initial time because not all the adders are working
+; start from 15e-9
+
+out = outfile("./script/out/temp.out" "w")
+
+fprintf(out "power=%f\n" power);
+
+for(tt 1 70
+	time = tt*220p
+	fprintf(out  "%d"  round(value(VT("/S1i<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1i<1>")  time)))
+	fprintf(out  "%d   "  round(value(VT("/S1i<0>")  time)))
+
+	fprintf(out  "%d"  round(value(VT("/S1q<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S1q<1>")  time)))
+	fprintf(out  "%d   "  round(value(VT("/S1q<0>")  time)))
+
+	fprintf(out  "%d"  round(value(VT("/S2i<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2i<1>")  time)))
+	fprintf(out  "%d   "  round(value(VT("/S2i<0>")  time)))
+
+	fprintf(out  "%d"  round(value(VT("/S2q<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/S2q<1>")  time)))
+	fprintf(out  "%d\n"  round(value(VT("/S2q<0>")  time)))
+
+)
+
+close(out)
+
+
+
+

@@ -1,0 +1,27 @@
+out = outfile("~/Desktop/tmp.out" "w")
+outputs()
+
+for(tt 1 100
+	time = tt*0.5e-9
+	fprintf(out  "%d"  round(value(VT("/theta2<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/theta2<1>")  time)))
+	fprintf(out  "%d   "  round(value(VT("/theta2<0>")  time)))
+
+	fprintf(out  "%d"  round(value(VT("/phi<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/phi<1>")  time)))
+	fprintf(out  "%d\n"  round(value(VT("/phi<0>")  time)))
+)
+
+close(out)

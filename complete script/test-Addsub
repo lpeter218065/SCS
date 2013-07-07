@@ -1,0 +1,97 @@
+;---------Test script for adder------------------------------------
+;------------------------------------------------------------------
+
+
+;---------Specify the simulation directory-------------------------
+;------------------------------------------------------------------
+; vecFile is the input file
+
+simulator( 'spectre )
+design(	 "/users/start2012/r0288315/simulation/test6/spectre/schematic/netlist/netlist")
+resultsDir( "/users/start2012/r0288315/simulation/test6/spectre/schematic" )
+modelFile( 
+    '("/users/start2012/r0288315/master/FreePDK45/ncsu_basekit/models/hspice/hspice_nom.include" "")
+)
+vecFile(
+    "/users/start2012/r0288315/Desktop/script/in3.vec"
+)
+hlcheck( "off" )
+analysis('tran ?stop "10n"  )
+
+
+;---------Specify the circuit parameter----------------------------
+;------------------------------------------------------------------
+; parameter for mirror
+
+desVar(	  "delay" 10p	)
+desVar(	  "t" 500p	)
+desVar(	  "fa_nw3" 100n	)
+desVar(	  "nw_inv2" 100n	)
+desVar(	  "nw_inv7" 500n	)
+desVar(	  "fa_nw" 1u	)
+desVar(	  "fa_nw2" 250n	)
+desVar(	  "fa_nw4" 250n	)
+desVar(	  "nw_inv5" 400n	)
+desVar(	  "mx_nw" 500n	)
+desVar(	  "nw_inv" 500n	)
+desVar(	  "nw_inv3" 500n	)
+desVar(	  "nw_inv6" 500n	)
+desVar(	  "wn2" 500n	)
+desVar(	  "wn" 750n	)
+desVar(	  "nw_inv4" 800n	)
+desVar(	  "pw_inv" "1.7*nw_inv"	)
+desVar(	  "pw_inv2" "1.7*nw_inv2"	)
+desVar(	  "pw_inv3" "1.7*nw_inv3"	)
+desVar(	  "pw_inv4" "1.7*nw_inv4"	)
+desVar(	  "pw_inv5" "1.7*nw_inv5"	)
+desVar(	  "pw_inv6" "1.7*nw_inv6"	)
+desVar(	  "pw_inv7" "1.7*nw_inv7"	)
+desVar(	  "wp" "1.7*wn"	)
+desVar(	  "wp2" "1.7*wn2"	)
+
+
+;---------Specify the simulation option----------------------------
+;------------------------------------------------------------------
+envOption('analysisOrder  list("tran") )
+option( ?categ 'turboOpts 'uniMode  "APS")
+temp( 27 ) 
+run()
+
+saveOption( 'save "selected" )
+save( 'v  "/r1<0:8>"  )
+
+
+;---------output result to file -----------------------------------
+;------------------------------------------------------------------
+out = outfile("~/Desktop/addtest.out" "w")
+outputs()
+
+
+;d = cross(VT("/r<8>") 0.45 1 "either" nil nil) - cross(VT("/in<5>") 0.45 1 "either" nil nil) 
+;d = awvAnalog2Digital(VT("/r<9:0>") nil nil 0.45 2e-08 "centre")
+;plot( d ?expr '( "d" ) )
+
+;r = awvAnalog2Digital(VT("/r<9:0>") nil nil 0.45 2e-08 "centre")
+;plot(r ?expr '("r"))
+
+;power = (abs((integ(IT("/V1/PLUS") 0.0 2e-9) * 0.9)) / 2e-9)
+;fprintf(out  "power = %10.2e  \n"  power)
+;d = cross(VT("/r<8>") 0.45 1 "either" nil nil) - cross(VT("/in<5>") 0.45 1 "either" nil nil)
+;fprintf(out  "delay = %10.12e  \n"  d)
+
+
+for(tt 2 101
+	time = tt*300p	
+	;fprintf(out  "%1.2e  "  time)
+	fprintf(out  "%d"  round(value(VT("/r1<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r1<1>")  time)))
+	fprintf(out  "%d\n"  round(value(VT("/r1<0>")  time)))
+)
+
+close(out)

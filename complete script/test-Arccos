@@ -1,0 +1,81 @@
+;---------Test script for arccos-----------------------------------
+;------------------------------------------------------------------
+
+
+;---------Specify the simulation directory-------------------------
+;------------------------------------------------------------------
+; vecFile is the input file
+simulator( 'spectre )
+design(	 "/users/start2012/r0288315/simulation/test-ArcCos/spectre/schematic/netlist/netlist")
+resultsDir( "/users/start2012/r0288315/simulation/test-ArcCos/spectre/schematic" )
+modelFile( 
+    '("/users/start2012/r0288315/master/FreePDK45/ncsu_basekit/models/hspice/hspice_nom.include" "")
+)
+vecFile(
+    "/users/start2012/r0288315/master/FreePDK45/ncsu_basekit/cdssetup/script/in2.vec"
+)
+hlcheck( "off" )
+
+
+;---------Specify the circuit parameter----------------------------
+;------------------------------------------------------------------
+analysis('tran ?stop "8n")
+desVar(	  "nw_inv6" 500n	)
+desVar(	  "mx_nw" 500n	)
+desVar(	  "mx_nw2" 400n	)
+desVar(	  "nw_inv" 500n	)
+desVar(	  "nw_inv2" 600n	)
+desVar(	  "t" 300p	)
+desVar(	  "delay" 10p	)
+desVar(	  "a_nw" 1000n	)
+desVar(	  "nw_tg" 600n	)
+desVar(	  "nw_tg2" 290n	)
+desVar(	  "wn3" 500n	)
+desVar(	  "pw_inv6" "1.7*nw_inv6"	)
+desVar(	  "pw_inv2" "1.7*nw_inv"	)
+desVar(	  "pw_inv" "1.7*nw_inv"	)
+desVar(	  "wp3" "1.7*wn3"	)
+desVar(	  "pw_tg" "1.7*nw_tg"	)
+desVar(	  "pw_tg2" "1.7*nw_tg2"	)
+
+;---------Specify the simulation option----------------------------
+;------------------------------------------------------------------
+
+envOption(
+	'userCmdLineOption  "-64" 
+	'analysisOrder  list("tran") 
+)
+option(	'nthreads  "25" 
+	'multithread  "on" 
+)
+option( ?categ 'turboOpts
+	'uniMode  "APS" 
+)
+saveOption( 'pwr "total" )
+saveOption( 'save "selected" )
+save( 'v "/r<8:0>" )
+save( 'i "/V0/PLUS" )
+temp( 27 ) 
+run()
+
+;---------output result to file -----------------------------------
+;------------------------------------------------------------------
+
+power = (abs((integ(IT("/V0/PLUS") 0.0 8e-09) * 0.9)) / 8e-09)
+
+out = outfile("~/Desktop/arcos.out" "w")
+outputs()
+for(tt 2 30
+	time = tt*300p
+	fprintf(out  "r = %d"  round(value(VT("/r<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<1>")  time)))
+	fprintf(out  "%d\n"  round(value(VT("/r<0>")  time)))
+)
+close(out)
+

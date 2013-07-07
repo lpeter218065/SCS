@@ -1,0 +1,84 @@
+; is used to fetch data after simulation in cadence
+; is used to test SCS
+
+
+out2 = outfile("./script/out/tmp.out" "w")
+outputs()
+
+for(tt 1 70
+	time = tt*220p
+	fprintf(out2  "%d"  round(value(VT("/A<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/A<1>")  time)))
+	fprintf(out2  "%d    "  round(value(VT("/A<0>")  time)))
+
+	fprintf(out2  "%d"  round(value(VT("/theta<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta<1>")  time)))
+	fprintf(out2  "%d     "  round(value(VT("/theta<0>")  time)))
+
+	fprintf(out2  "%d"  round(value(VT("/amp<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/amp<1>")  time)))
+	fprintf(out2  "%d      "  round(value(VT("/amp<0>")  time)))
+
+	fprintf(out2  "%d"  round(value(VT("/theta2<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/theta2<1>")  time)))
+	fprintf(out2  "%d       "  round(value(VT("/theta2<0>")  time)))
+
+	fprintf(out2  "%d"  round(value(VT("/phi<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/phi<1>")  time)))
+	fprintf(out2  "%d        "  round(value(VT("/phi<0>")  time)))
+
+	fprintf(out2  "%d"  round(value(VT("/angle1<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle1<1>")  time)))
+	fprintf(out2  "%d        "  round(value(VT("/angle1<0>")  time)))
+
+
+	fprintf(out2  "%d"  round(value(VT("/angle2<8>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<7>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<6>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<5>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<4>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<3>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<2>")  time)))
+	fprintf(out2  "%d"  round(value(VT("/angle2<1>")  time)))
+	fprintf(out2  "%d\n"  round(value(VT("/angle2<0>")  time)))
+)
+
+close(out2)
+
+

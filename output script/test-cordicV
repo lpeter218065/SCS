@@ -1,0 +1,27 @@
+out = outfile("~/Desktop/cordicV3.out" "w")
+outputs()
+
+for(tt 2 20
+	time = tt*220p	
+	fprintf(out  "A = %d"  round(value(VT("/a<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/a<1>")  time)))
+	fprintf(out  "%d  "  round(value(VT("/a<0>")  time)))
+
+	fprintf(out  "theta = %d"  round(value(VT("/b<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/b<1>")  time)))
+	fprintf(out  "%d\n"  round(value(VT("/b<0>")  time)))
+)
+
+close(out)

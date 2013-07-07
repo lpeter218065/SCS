@@ -1,0 +1,23 @@
+; SCS-input1 SCS-input2 SCS-input3 are three testvectors to test SCS separately
+radix 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+io    i i i i i i i i i i i i i i i i i i
+vname I<[8:0]> Q<[8:0]>
+vih 0.9
+vil 0
+tunit ps
+trise 10
+tfall 10
+
+period 220
+
+000100000      000110000
+000000000      000000000
+000001001      000001001
+000010010      000010010
+000011011      000011011
+000100100      000100100  
+000101101      000101101
+000110110      000110110
+000111111      000111111  
+001001000      001001000
+001010001      001010001

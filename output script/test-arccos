@@ -1,0 +1,17 @@
+out = outfile("~/Desktop/arcos.out" "w")
+outputs()
+
+for(tt 2 50
+	time = tt*220p	
+	fprintf(out  "%d"  round(value(VT("/r<8>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<7>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<6>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<5>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<4>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<3>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<2>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<1>")  time)))
+	fprintf(out  "%d"  round(value(VT("/r<0>")  time)))
+)
+
+close(out)
