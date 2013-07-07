@@ -9,7 +9,7 @@ combine simulation, data saving, you only need to paste into cadence command lin
 but sometimes it is not very flexible
 
 
---Output script
+--Output Script
 alternative way is to run simulation in cadence normally, just use scripts to save data
 
 
